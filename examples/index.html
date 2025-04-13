@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bar Graph Library Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #graph-container {
+      width: 600px;
+      height: 400px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bar Graph Library Demo</h1>
+  <div id="graph-container"></div>
+
+  <!-- Include the library -->
+  <script src="../dist/bar-graph.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/blag55/my-graph-library@main/dist/graph-lib4.js"></script>
+
+  <!-- Initialize the bar graph -->
+  <script>
+    const data = {
+      labels: ["Apples", "Bananas", "Cherries"],
+      values: [10, 20, 15]
+    };
+
+    const barGraph = new BarGraph("graph-container", {
+      width: 600,
+      height: 400,
+      barColor: "blue"
+    });
+
+    barGraph.draw(data);
+  </script>
+</body>
+</html>
