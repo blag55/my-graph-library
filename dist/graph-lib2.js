@@ -1,10 +1,7 @@
-// UMD Wrapper for compatibility with browsers and Node.js
 (function (global, factory) {
   if (typeof module === "object" && typeof module.exports === "object") {
-    // Node.js or CommonJS
     module.exports = factory();
   } else {
-    // Browser global
     global.BarGraph = factory();
   }
 })(this, function () {
@@ -17,7 +14,6 @@
         throw new Error(`Container with ID "${containerId}" not found.`);
       }
 
-      // Default options
       this.options = {
         width: options.width || 600,
         height: options.height || 400,
@@ -26,7 +22,6 @@
         ...options,
       };
 
-      // Initialize the container styles
       this.container.style.position = "relative";
       this.container.style.width = `${this.options.width}px`;
       this.container.style.height = `${this.options.height}px`;
@@ -42,19 +37,21 @@
       const { labels, values } = data;
       const maxValue = Math.max(...values);
 
-      // Clear the container before rendering
+      if (maxValue === 0) {
+        console.error("All values are zero; no bars to display.");
+        return;
+      }
+
       this.container.innerHTML = "";
 
-      // Create a wrapper for the graph
       const graphWrapper = document.createElement("div");
       graphWrapper.style.display = "flex";
       graphWrapper.style.alignItems = "flex-end";
       graphWrapper.style.justifyContent = "space-between";
-      graphWrapper.style.height = `${this.options.height - 40}px`; // Leave space for labels
+      graphWrapper.style.height = `${this.options.height - 40}px`;
 
-      // Create bars
       values.forEach((value, index) => {
-        const barHeight = (value / maxValue) * 100; // Scale height as percentage
+        const barHeight = (value / maxValue) * 100;
 
         const barContainer = document.createElement("div");
         barContainer.style.flex = "1";
@@ -63,7 +60,9 @@
 
         const bar = document.createElement("div");
         bar.style.height = `${barHeight}%`;
+        bar.style.width = "100%";
         bar.style.backgroundColor = this.options.barColor;
+        bar.style.border = "1px solid black"; // Add a border for better visibility
         bar.style.transition = "height 0.3s ease";
 
         const label = document.createElement("span");
@@ -76,7 +75,6 @@
         graphWrapper.appendChild(barContainer);
       });
 
-      // Append the graph to the container
       this.container.appendChild(graphWrapper);
     }
   }
