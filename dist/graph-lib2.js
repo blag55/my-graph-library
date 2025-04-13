@@ -1,3 +1,4 @@
+// UMD Wrapper 3for compatibility with browsers and Node.js
 draw(data) {
   if (!data || !data.labels || !data.values) {
     throw new Error("Data must include 'labels' and 'values' arrays.");
